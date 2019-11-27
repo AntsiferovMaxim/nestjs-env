@@ -1,0 +1,26 @@
+{
+  "name": "nestjs-env",
+  "version": "0.0.1",
+  "description": "Using this library you can easily work with environment variables",
+  "scripts": {
+    "build": "rm -rf ./dist && tsc -p tsconfig.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nestjs",
+    "nestjs-config",
+    "nestjs-env",
+    "env"
+  ],
+  "author": "Antsiferov Maxim <antsiferovmaximv@gmail.com>",
+  "license": "ISC",
+  "peerDependencies": {
+    "@nestjs/common": "^6.10.2"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^6.10.2",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.5.3",
+    "typescript": "^3.7.2"
+  }
+}
