@@ -3,3 +3,4 @@ yarn.lock
 example/
 src/
 node_modules/
+.idea/
