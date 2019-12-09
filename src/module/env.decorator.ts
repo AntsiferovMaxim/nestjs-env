@@ -1,4 +1,6 @@
-export function Env(key: string, {default: defaultValue, type: valueType = String}: EnvParams = {}) {
+export function Env(key: string, params?: EnvParams) {
+    const {default: defaultValue, type: valueType = String} = params || {};
+
     return (target: object, propertyName: string) => {
         const value = process.env[key] !== undefined ?
             castValue(process.env[key], valueType) :
