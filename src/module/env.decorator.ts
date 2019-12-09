@@ -1,5 +1,17 @@
+export enum EnvType {
+    String,
+    Number,
+    Boolean,
+    Json
+}
+
+interface EnvParams {
+    type?: EnvType;
+    default?: string | number | boolean;
+}
+
 export function Env(key: string, params?: EnvParams) {
-    const {default: defaultValue, type: valueType = String} = params || {};
+    const {default: defaultValue, type: valueType = EnvType.String} = params || {};
 
     return (target: object, propertyName: string) => {
         const value = process.env[key] !== undefined ?
@@ -14,19 +26,24 @@ export function Env(key: string, params?: EnvParams) {
     };
 }
 
-function castValue(value: string | undefined, valueType: StringConstructor | NumberConstructor | BooleanConstructor) {
+function castValue(value: string | undefined, valueType: EnvType) {
     if (value === undefined) {
         return;
     }
 
-    if (valueType === Boolean) {
+    if (valueType === EnvType.Boolean) {
         return value.toLowerCase() === 'true';
     }
 
-    return valueType(value);
-}
+    if (valueType === EnvType.Json) {
+        return JSON.parse(value);
+    }
 
-interface EnvParams {
-    type?: StringConstructor | NumberConstructor | BooleanConstructor;
-    default?: string | number | boolean;
+    if (valueType === EnvType.String) {
+        return String(value)
+    }
+
+    if (valueType === EnvType.Number) {
+        return Number(value)
+    }
 }
