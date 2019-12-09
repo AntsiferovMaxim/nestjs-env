@@ -1,6 +1,6 @@
 {
   "name": "nestjs-env",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Using this library you can easily work with environment variables",
   "repository": {
     "type": "git",
