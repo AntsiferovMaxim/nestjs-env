@@ -9,7 +9,7 @@ yarn add nestjs-env
 ```bash
 npm install nestjs-env --save
 ```
-
+> This library is not responsible for loading environment variables from a file, for this you need to use `env-cmd` or `dotenv`.
 ### Getting Started
 
 Let's imagine that we have a folder called `src/config` in our project that contains several configuration files.
@@ -42,11 +42,11 @@ Let's register the config module in `app.module.ts`
 ```ts
 import { Module } from '@nestjs/common';
 import { EnvModule } from 'nestjs-env';
-import { GraphqlConfig, GrpcConfig } from './config';
+import { AppConfig, GrpcConfig } from './config';
 
 @Module({
     imports: [
-        EnvModule.register([ GraphqlConfig, GrpcConfig ]),
+        EnvModule.register([ AppConfig, GrpcConfig ]),
     ],
 })
 export class AppModule {}
