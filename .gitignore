@@ -8,11 +8,13 @@
 *.sublime-workspace
 
 # IDE - VSCode
+.idea/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+src/__tests__/coverage
 
 node_modules/
 dist/

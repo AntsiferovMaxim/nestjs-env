@@ -20,7 +20,7 @@ export function Env(key: string, params?: EnvParams) {
             castValue(process.env[key], valueType) :
             defaultValue;
 
-        if (!value) {
+        if (value === undefined) {
             throw new EnvNotFound(key);
         }
 
@@ -34,7 +34,7 @@ export function Env(key: string, params?: EnvParams) {
 
 function castValue(value: string | undefined, valueType: EnvType) {
     if (value === undefined) {
-        return;
+        return undefined;
     }
 
     if (valueType === EnvType.Boolean) {
