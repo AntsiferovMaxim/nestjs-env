@@ -1,3 +1,5 @@
+import {EnvNotFound} from './env-not-found.exception';
+
 export enum EnvType {
     String,
     Number,
@@ -17,6 +19,10 @@ export function Env(key: string, params?: EnvParams) {
         const value = process.env[key] !== undefined ?
             castValue(process.env[key], valueType) :
             defaultValue;
+
+        if (!value) {
+            throw new EnvNotFound(key);
+        }
 
         Object.defineProperty(target, propertyName, {
             enumerable: true,
