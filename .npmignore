@@ -5,3 +5,4 @@ src/
 node_modules/
 .idea/
 src/__tests__/coverage
+dist/__tests__/

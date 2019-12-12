@@ -20,6 +20,7 @@ node_modules/
 dist/
 example/node_modules/
 example/dist
+src/__tests__/
 
 # OS
 .DS_Store
