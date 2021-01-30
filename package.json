@@ -9,18 +9,24 @@
   "scripts": {
     "build": "rm -rf ./dist && tsc -p tsconfig.json",
     "prepublish": "yarn build",
+    "lint": "eslint 'src/**/*.ts' --ignore-pattern 'src/**/*.spec.ts'",
+    "format": "prettier \"**/*.ts\" --ignore-path ./.prettierignore --write && git status",
     "test": "env-cmd -f ./src/__tests__/.env jest",
     "test:watch": "env-cmd -f ./src/__tests__/.env jest --watch",
     "test:coverage": "env-cmd -f ./src/__tests__/.env jest --coverage"
   },
-  "keywords": [
-    "nestjs",
-    "config",
-    "nestjs-env",
-    "env"
-  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,json}": [
+      "prettier --ignore-path ./.prettierignore --write"
+    ]
+  },
   "author": "Antsiferov Maxim <antsiferovmaximv@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "peerDependencies": {
     "@nestjs/common": "^6.10.2"
   },
@@ -30,8 +36,12 @@
     "@nestjs/platform-express": "^6.10.10",
     "@nestjs/testing": "^6.10.10",
     "@types/jest": "^24.0.23",
+    "@types/node": "^14.14.22",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
     "env-cmd": "^10.0.1",
+    "eslint": "^7.18.0",
     "jest": "^24.9.0",
+    "prettier": "^2.2.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.3",
     "supertest": "^4.0.2",
@@ -51,5 +61,18 @@
     },
     "coverageDirectory": "./__tests__/coverage",
     "testEnvironment": "node"
-  }
+  },
+  "dependencies": {
+    "@typescript-eslint/parser": "^4.14.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.3"
+  },
+  "keywords": [
+    "nestjs",
+    "config",
+    "nestjs-env",
+    "env"
+  ]
 }
