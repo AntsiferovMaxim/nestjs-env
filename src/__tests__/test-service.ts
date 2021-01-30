@@ -1,11 +1,11 @@
-import {Injectable} from '@nestjs/common';
-import {TestConfig} from './test.config';
+import { Injectable } from '@nestjs/common';
+import { TestConfig } from './test.config';
 
 @Injectable()
 export class TestService {
-    constructor(private testConfig: TestConfig) {}
+  constructor(private testConfig: TestConfig) {}
 
-    testMethod(): string {
-        return this.testConfig.testString;
-    }
+  testMethod(): string {
+    return this.testConfig.testString;
+  }
 }
