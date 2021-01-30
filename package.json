@@ -22,14 +22,12 @@
     "test:watch": "env-cmd -f ./src/__tests__/.env jest --watch",
     "test:coverage": "env-cmd -f ./src/__tests__/.env jest --coverage"
   },
-  "dependencies": {
+  "devDependencies": {
     "@typescript-eslint/parser": "^4.14.1",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-import": "^2.22.1",
     "husky": "^4.3.8",
-    "lint-staged": "^10.5.3"
-  },
-  "devDependencies": {
+    "lint-staged": "^10.5.3",
     "@nestjs/common": "^6.10.2",
     "@nestjs/core": "^6.10.10",
     "@nestjs/platform-express": "^6.10.10",
