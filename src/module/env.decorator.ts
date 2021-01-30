@@ -1,57 +1,43 @@
 import { EnvNotFound } from './env-not-found.exception';
 
-export enum EnvType {
-  String,
-  Number,
-  Boolean,
-  Json,
-}
-
 interface EnvParams {
-  type?: EnvType;
-  default?: string | number | boolean;
+  default?: string | number | boolean | object;
 }
 
 export function Env(key: string, params?: EnvParams) {
-  const { default: defaultValue, type: valueType = EnvType.String } =
-    params || {};
+  const { default: defaultValue } = params || {};
 
   return (target: object, propertyName: string) => {
-    const value =
-      process.env[key] !== undefined
-        ? castValue(process.env[key], valueType)
-        : defaultValue;
+    const targetType = Reflect.getMetadata('design:type', target, propertyName);
+    const env = process.env[key];
 
-    if (value === undefined) {
-      throw new EnvNotFound(key);
+    if (env === undefined) {
+      if (defaultValue === undefined) {
+        throw new EnvNotFound(key);
+      } else {
+        Object.defineProperty(target, propertyName, {
+          enumerable: true,
+          configurable: false,
+          value: defaultValue,
+        });
+        return;
+      }
     }
 
     Object.defineProperty(target, propertyName, {
       enumerable: true,
       configurable: false,
-      value,
+      value: castValue(env, targetType),
     });
   };
 }
 
-function castValue(value: string | undefined, valueType: EnvType) {
-  if (value === undefined) {
-    return undefined;
-  }
-
-  if (valueType === EnvType.Boolean) {
-    return value.toLowerCase() === 'true';
-  }
-
-  if (valueType === EnvType.Json) {
+function castValue(value: string, targetConstructor: any) {
+  if (targetConstructor === Object) {
     return JSON.parse(value);
   }
-
-  if (valueType === EnvType.String) {
-    return String(value);
+  if (targetConstructor === Boolean) {
+    return value === 'true';
   }
-
-  if (valueType === EnvType.Number) {
-    return Number(value);
-  }
+  return targetConstructor(value);
 }

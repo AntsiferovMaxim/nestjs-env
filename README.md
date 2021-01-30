@@ -17,23 +17,28 @@ Let's imagine that we have a folder called `src/config` in our project that cont
 ```bash
 /src
 ├── app.module.ts
+├── app.service.ts
 ├── config
 │   ├── app.config.ts
-│   ├── grpc.config.ts
 │   └── index.ts
+bootstrap.ts
 ```
 
 Example app.config.ts
 
 ```ts
-import {Env, EnvType} from 'nestjs-env';
+import { Env } from 'nestjs-env';
 
 export class AppConfig {
-    @Env('PORT', {type: EnvType.Number, default: 3000})
+    @Env('PORT', {default: 3000})
     port: number;
 
     @Env('NODE_ENV')
     env: string;
+    
+    get isDevelopment() {
+      return this.env === 'development';
+    }
 }
 ```
 
@@ -42,11 +47,11 @@ Let's register the config module in `app.module.ts`
 ```ts
 import { Module } from '@nestjs/common';
 import { EnvModule } from 'nestjs-env';
-import { AppConfig, GrpcConfig } from './config';
+import { AppConfig } from 'src/config';
 
 @Module({
     imports: [
-        EnvModule.register([ AppConfig, GrpcConfig ]),
+        EnvModule.register([ AppConfig ]),
     ],
 })
 export class AppModule {}
@@ -57,21 +62,32 @@ export class AppModule {}
 Now we are ready to inject our `AppConfig` anywhere we'd like.
 
 ```ts
-import {AppConfig} from 'src/config';
+import { AppConfig } from 'src/config';
 
 @Injectable()
-class SomeService {
-
-    constructor(private readonly appConfig: AppConfig) {}
-    
-    isProduction() {
-        const env = this.appConfig.env;
-        
-        return env === 'production';
+class AppService {
+    constructor(private readonly appConfig: AppConfig) {
+    	console.log(this.appConfig.isDevelopment);
     }
+}
+```
+
+```ts
+import {AppConfig} from 'src/config';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  const config = app.get(AppConfig);
+  
+  await app.listen(config.port);
 }
 ```
 
 That's it!
 
 -----
+
+## License
+
+The MIT License (MIT)
+
