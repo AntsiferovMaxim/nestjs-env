@@ -1,9 +1,12 @@
 {
   "name": "nestjs-env",
-  "version": "2.0.0",
+  "version": "2.1.1",
   "description": "Using this library you can easily work with environment variables",
   "author": "Antsiferov Maxim <antsiferovmaximv@gmail.com>",
   "license": "MIT",
+  "bin": {
+    "nestjs-env": "node dist/cli.js"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -29,6 +32,7 @@
     "@nestjs/testing": "^7.6.7",
     "@types/jest": "^24.0.23",
     "@types/node": "^14.14.22",
+    "@types/recursive-readdir": "^2.2.1",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
     "env-cmd": "^10.0.1",
@@ -46,7 +50,7 @@
     "typescript": "^3.7.2"
   },
   "peerDependencies": {
-    "@nestjs/common": "^6.10.2"
+    "@nestjs/common": "*"
   },
   "husky": {
     "hooks": {
@@ -77,5 +81,9 @@
     "config",
     "nestjs-env",
     "env"
-  ]
+  ],
+  "dependencies": {
+    "recursive-readdir": "^2.2.3",
+    "yargs": "^17.6.2"
+  }
 }
